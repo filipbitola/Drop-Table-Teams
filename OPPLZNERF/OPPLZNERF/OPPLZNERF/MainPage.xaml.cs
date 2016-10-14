@@ -30,6 +30,7 @@ namespace OPPLZNERF
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        GamepadHandler gamepadHandler;
         Gamepad controller;
         DispatcherTimer dispatcherTimer;
         TimeSpan period = TimeSpan.FromMilliseconds(100);
@@ -38,6 +39,8 @@ namespace OPPLZNERF
         public MainPage()
         {
             this.InitializeComponent();
+
+            GamepadHandler gamepadHandler = new GamepadHandler();
 
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += dispatcherTimer_Tick;
@@ -101,6 +104,8 @@ namespace OPPLZNERF
             {
                 controller = Gamepad.Gamepads.First();
                 var reading = controller.GetCurrentReading();
+
+                gamepadHandler.ProcessReading(reading);
 
                 pbLeftThumbstickX.Value = reading.LeftThumbstickX;
                 pbLeftThumbstickY.Value = reading.LeftThumbstickY;
